@@ -1,7 +1,7 @@
 ﻿namespace AspCorePanda.BindingModels
 {
     using System.ComponentModel.DataAnnotations;
-    
+
     public class RegisterViewModel
     {
         [Required(ErrorMessage = "Username is required.")]
