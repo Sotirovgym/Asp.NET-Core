@@ -1,4 +1,4 @@
-﻿namespace AspCorePanda.Data.Models
+﻿namespace AspPanda.Models.Entities
 {
     using System;
     using System.ComponentModel.DataAnnotations;

@@ -1,4 +1,4 @@
-﻿namespace AspCorePanda.BindingModels
+﻿namespace AspPanda.Models.ViewModels
 {
     using System.ComponentModel.DataAnnotations;
 

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using AspPanda.Models;
-
-namespace AspPanda.Controllers
+﻿namespace AspPanda.Controllers
 {
+    using System.Diagnostics;
+    using Microsoft.AspNetCore.Mvc;
+    using AspPanda.Models.ViewModels;
+
     public class HomeController : Controller
     {
         public IActionResult Index()

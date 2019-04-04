@@ -1,6 +1,6 @@
-﻿namespace AspCorePanda.Data
+﻿namespace AspPanda.Data
 {
-    using AspCorePanda.Data.Models;
+    using AspPanda.Models.Entities;
     using Microsoft.EntityFrameworkCore;
 
     public class PandaDbContext : DbContext

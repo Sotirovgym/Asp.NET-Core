@@ -1,6 +1,4 @@
-using System;
-
-namespace AspPanda.Models
+﻿namespace AspPanda.Models.ViewModels
 {
     public class ErrorViewModel
     {

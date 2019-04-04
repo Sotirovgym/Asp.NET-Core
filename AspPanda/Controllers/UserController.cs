@@ -1,18 +1,18 @@
-﻿using AspCorePanda.BindingModels;
-//using AspCorePanda.Data.Managers;
-using Microsoft.AspNetCore.Mvc;
-using System;
-
-namespace AspCorePanda.Controllers
+﻿namespace AspCorePanda.Controllers
 {
+    using AspPanda.Data.Managers;
+    using AspPanda.Models.ViewModels;
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+
     public class UserController : Controller
     {
-        //private UserManager userManager;
+        private UserManager userManager;
 
-        //public UserController()
-        //{
-        //    this.userManager = new UserManager();
-        //}
+        public UserController()
+        {
+            this.userManager = new UserManager();
+        }
 
         public IActionResult Register()
         {
@@ -30,7 +30,7 @@ namespace AspCorePanda.Controllers
 
             try
             {
-                //this.userManager.CreateUser(user);
+                this.userManager.CreateUser(user);
                 return RedirectToAction("Home", "Index");
             }
             catch (Exception ex)

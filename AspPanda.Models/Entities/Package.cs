@@ -1,6 +1,6 @@
-﻿namespace AspCorePanda.Data.Models
+﻿namespace AspPanda.Models.Entities
 {
-    using AspCorePanda.Data.Enums;
+    using AspPanda.Models.Enums;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

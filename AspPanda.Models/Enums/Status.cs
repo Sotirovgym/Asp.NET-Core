@@ -1,4 +1,4 @@
-﻿namespace AspCorePanda.Data.Enums
+﻿namespace AspPanda.Models.Enums
 {
     public enum Status
     {
