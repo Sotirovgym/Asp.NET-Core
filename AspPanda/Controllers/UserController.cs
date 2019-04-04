@@ -31,7 +31,7 @@
             try
             {
                 this.userManager.CreateUser(user);
-                return RedirectToAction("Home", "Index");
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {
