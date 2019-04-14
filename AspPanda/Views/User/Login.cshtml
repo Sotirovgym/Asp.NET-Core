@@ -1,0 +1,37 @@
+﻿@model LoginViewModel
+<div class="cotainer">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-2">
+                <div class="card-header">Login</div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Login", "User"))
+                    {
+                        @Html.AntiForgeryToken()
+                            @Html.ValidationMessageFor(model => model.Username, null, new { @class = "text-danger" })
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.Username, null, new { @class = "col-md-4 col-form-label text-md-right" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.Username, null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                            @Html.ValidationMessageFor(model => model.Password, null, new { @class = "text-danger" })
+                        <div class="form-group row">
+                            @Html.LabelFor(model => model.Password, null, new { @class = "col-md-4 col-form-label text-md-right" })
+                            <div class="col-md-6">
+                                @Html.TextBoxFor(model => model.Password, null, new { @class = "form-control", @type = "password" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                                Login
+                            </button>
+                            @Html.ActionLink("Register", "Register", "User", null, new { @class = "btn btn-primary"})
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

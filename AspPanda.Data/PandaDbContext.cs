@@ -1,7 +1,10 @@
 ﻿namespace AspPanda.Data
 {
     using AspPanda.Models.Entities;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using System;
 
     public class PandaDbContext : DbContext
     {
@@ -16,17 +19,17 @@
 
         }
 
-        public PandaDbContext(DbContextOptions optionsBuilder)
-            : base()
+        public PandaDbContext(DbContextOptions<PandaDbContext> options)
+            : base(options)
         {
 
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!builder.IsConfigured)
+            if (!optionsBuilder.IsConfigured)
             {
-                builder.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=Panda;Integrated Security=True;MultipleActiveResultSets=True;");
+                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=Panda;Trusted_Connection=True;MultipleActiveResultSets=True;");
             }
         }
 

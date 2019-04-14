@@ -14,6 +14,23 @@
             this.userManager = new UserManager();
         }
 
+        public IActionResult Login()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(LoginViewModel user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(user);
+            }
+
+            return this.View();
+        }
+        
         public IActionResult Register()
         {
             return View();
@@ -35,7 +52,8 @@
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException(ex.Message);
+                this.ModelState.AddModelError("Error", ex.Message);
+                return this.View(user);
             }
         }
     }

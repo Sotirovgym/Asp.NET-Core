@@ -10,10 +10,11 @@
     public class UserRepository : IUserRepository
     {
         private PandaDbContext dbContext;
+        private IServiceProvider serviceProvider;
 
         public UserRepository()
         {
-            this.dbContext = new PandaDbContext();
+            this.dbContext = new PandaDbContext(serviceProvider.GetService(dbContext.));
         }
 
         public void CreateUser(RegisterViewModel registerUser)
