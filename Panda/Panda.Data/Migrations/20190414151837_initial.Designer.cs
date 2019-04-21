@@ -5,12 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Panda.Data;
 
 namespace Panda.Data.Migrations
 {
     [DbContext(typeof(PandaDbContext))]
-    [Migration("20190414110842_Initial")]
-    partial class Initial
+    [Migration("20190414151837_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -134,7 +135,7 @@ namespace Panda.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Panda.Web.Areas.Identity.Data.MyIdentityUser", b =>
+            modelBuilder.Entity("Panda.Models.Entities.MyIdentityUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -165,6 +166,8 @@ namespace Panda.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<int>("Role");
+
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
@@ -185,6 +188,57 @@ namespace Panda.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Panda.Models.Entities.Package", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000);
+
+                    b.Property<DateTime>("EstimatedDeliveryDate");
+
+                    b.Property<string>("RecipientId")
+                        .IsRequired();
+
+                    b.Property<string>("ShippingAddreess")
+                        .IsRequired()
+                        .HasMaxLength(150);
+
+                    b.Property<int>("Status");
+
+                    b.Property<decimal>("Weight");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipientId");
+
+                    b.ToTable("Packages");
+                });
+
+            modelBuilder.Entity("Panda.Models.Entities.Receipt", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<decimal>("Fee");
+
+                    b.Property<DateTime>("IssuedOn");
+
+                    b.Property<Guid>("PackageId");
+
+                    b.Property<string>("RecipientId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PackageId");
+
+                    b.HasIndex("RecipientId");
+
+                    b.ToTable("Receipts");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -195,7 +249,7 @@ namespace Panda.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Panda.Web.Areas.Identity.Data.MyIdentityUser")
+                    b.HasOne("Panda.Models.Entities.MyIdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -203,7 +257,7 @@ namespace Panda.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Panda.Web.Areas.Identity.Data.MyIdentityUser")
+                    b.HasOne("Panda.Models.Entities.MyIdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -216,7 +270,7 @@ namespace Panda.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Panda.Web.Areas.Identity.Data.MyIdentityUser")
+                    b.HasOne("Panda.Models.Entities.MyIdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -224,9 +278,30 @@ namespace Panda.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Panda.Web.Areas.Identity.Data.MyIdentityUser")
+                    b.HasOne("Panda.Models.Entities.MyIdentityUser")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Panda.Models.Entities.Package", b =>
+                {
+                    b.HasOne("Panda.Models.Entities.MyIdentityUser", "Recipient")
+                        .WithMany("Packages")
+                        .HasForeignKey("RecipientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Panda.Models.Entities.Receipt", b =>
+                {
+                    b.HasOne("Panda.Models.Entities.Package", "Package")
+                        .WithMany("Receipts")
+                        .HasForeignKey("PackageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Panda.Models.Entities.MyIdentityUser", "Recipient")
+                        .WithMany("Receipts")
+                        .HasForeignKey("RecipientId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

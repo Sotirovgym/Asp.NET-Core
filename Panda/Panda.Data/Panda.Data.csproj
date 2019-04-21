@@ -13,4 +13,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Panda.Models\Panda.Models.csproj" />
+  </ItemGroup>
+
 </Project>

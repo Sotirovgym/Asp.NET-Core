@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Panda.Data.Entities;
+using Panda.Models.Entities;
 using Panda.Data;
 
 namespace Panda.Web

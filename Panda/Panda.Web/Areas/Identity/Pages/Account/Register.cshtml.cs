@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +10,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Panda.Data.Entities;
+using Panda.Data;
+using Panda.Models.Entities;
 
 namespace Panda.Web.Areas.Identity.Pages.Account
 {
@@ -20,17 +22,20 @@ namespace Panda.Web.Areas.Identity.Pages.Account
         private readonly UserManager<MyIdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly PandaDbContext _dbContext;
 
         public RegisterModel(
             UserManager<MyIdentityUser> userManager,
             SignInManager<MyIdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            PandaDbContext dbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _dbContext = dbContext;
         }
 
         [BindProperty]
@@ -40,10 +45,8 @@ namespace Panda.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
+            [Required(ErrorMessage = "Username is required.")]
+            public string Username { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -55,6 +58,11 @@ namespace Panda.Web.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
@@ -67,8 +75,19 @@ namespace Panda.Web.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new MyIdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new MyIdentityUser();
+
+                if (_dbContext.Users.Any())
+                {
+                    user = new MyIdentityUser { UserName = Input.Username, Email = Input.Email, Role = Panda.Models.Enums.Role.User };
+                }
+                else
+                {
+                    user = new MyIdentityUser { UserName = Input.Username, Email = Input.Email, Role = Panda.Models.Enums.Role.Admin };
+                }
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

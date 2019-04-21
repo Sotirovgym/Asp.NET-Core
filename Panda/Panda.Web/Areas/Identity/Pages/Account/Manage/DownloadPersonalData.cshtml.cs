@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Panda.Data.Entities;
+using Panda.Models.Entities;
 
 namespace Panda.Web.Areas.Identity.Pages.Account.Manage
 {

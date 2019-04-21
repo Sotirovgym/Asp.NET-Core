@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Panda.Data.Entities;
+using Panda.Models.Entities;
 
 namespace Panda.Web.Areas.Identity.Pages.Account
 {
