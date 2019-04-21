@@ -20,18 +20,21 @@ namespace Panda.Web.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<MyIdentityUser> _signInManager;
         private readonly UserManager<MyIdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly PandaDbContext _dbContext;
 
         public RegisterModel(
             UserManager<MyIdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager,
             SignInManager<MyIdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             PandaDbContext dbContext)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
@@ -85,8 +88,16 @@ namespace Panda.Web.Areas.Identity.Pages.Account
                 {
                     user = new MyIdentityUser { UserName = Input.Username, Email = Input.Email, Role = Panda.Models.Enums.Role.Admin };
                 }
-                
+
+                var isRoleExists = await _roleManager.RoleExistsAsync(user.Role.ToString());
+
+                if (!isRoleExists)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(user.Role.ToString()));
+                }
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                await _userManager.AddToRoleAsync(user, user.Role.ToString());
 
                 if (result.Succeeded)
                 {

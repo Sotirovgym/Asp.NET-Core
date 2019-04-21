@@ -40,8 +40,9 @@ namespace Panda.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<MyIdentityUser>()
+            services.AddIdentity<MyIdentityUser, IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
+                .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<PandaDbContext>();
 
             services.Configure<IdentityOptions>(options =>
