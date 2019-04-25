@@ -2,14 +2,22 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-left">
-    <h1 class="display-4">Welcome to PANDA Delivery Services.</h1>
-    <hr />
+@if (User.Identity.IsAuthenticated)
+{
+    <h1>You are logged in</h1>
+}
+else
+{
     <div class="text-left">
-        <p><a href="https://localhost:44399/Identity/Account/Login">Login</a> if you have an account.</p>
-        <p><a href="https://localhost:44399/Identity/Account/Register">Register</a> if you don't.</p>
+        <partial name="_CookieConsentPartial" />
+        <h1 class="display-4">Welcome to PANDA Delivery Services.</h1>
+        <hr />
+        <div class="text-left">
+            <p><a asp-area="Identity" asp-page="/Account/Login">Login</a> if you have an account.</p>
+            <p><a asp-area="Identity" asp-page="/Account/Register">Register</a> if you don't.</p>
+        </div>
+        <div class="text-center col-md-10">
+            <img src="https://techcrunch.com/wp-content/uploads/2013/02/panda-drive_vn.png?w=730&crop=1" class="img-fluid" style="height:480px" alt="Responsive image" />
+        </div>
     </div>
-    <div class="text-center col-md-10">
-        <img src="https://techcrunch.com/wp-content/uploads/2013/02/panda-drive_vn.png?w=730&crop=1" class="img-fluid" style="height:480px" alt="Responsive image" />
-    </div>
-</div>
+}
