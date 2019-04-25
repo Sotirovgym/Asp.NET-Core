@@ -12,6 +12,8 @@
 
         public DbSet<Receipt> Receipts { get; set; }
 
+        public PandaDbContext() {}
+
         public PandaDbContext(DbContextOptions<PandaDbContext> options)
             : base(options)
         {
