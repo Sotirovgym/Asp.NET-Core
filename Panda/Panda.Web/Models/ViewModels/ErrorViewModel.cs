@@ -1,7 +1,7 @@
-using System;
-
-namespace Panda.Web.Models
+namespace Panda.Web.Models.ViewModels
 {
+    using System;
+
     public class ErrorViewModel
     {
         public string RequestId { get; set; }

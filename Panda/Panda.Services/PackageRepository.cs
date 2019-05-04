@@ -1,4 +1,4 @@
-﻿namespace Panda.Services.Repositories
+﻿namespace Panda.Services
 {
     using System;
     using System.Collections.Generic;
@@ -7,24 +7,24 @@
     using Panda.Models.Entities;
     using Panda.Services.Interfaces;
 
-    public class PackageRepository : IPackageRepository
+    public class PackageService : IPackageService
     {
-        private PandaDbContext dbContext;
+        private PandaDbContext _dbContext;
 
-        public PackageRepository()
+        public PackageService(PandaDbContext dbContext)
         {
-            this.dbContext = new PandaDbContext();
+            this._dbContext = dbContext;
         }
 
         public void CreatePackage(Package package)
         {
-            this.dbContext.Packages.Add(package);
-            this.dbContext.SaveChanges();
+            this._dbContext.Packages.Add(package);
+            this._dbContext.SaveChanges();
         }
 
         public Package GetPackageById(Guid id)
         {
-            var package = this.dbContext.Packages.FirstOrDefault(p => p.Id == id);
+            var package = this._dbContext.Packages.FirstOrDefault(p => p.Id == id);
 
             if (package == null)
             {
@@ -36,7 +36,8 @@
 
         public IEnumerable<Package> GetPackages()
         {
-            var packages = this.dbContext.Packages.Select(p => p).ToArray();
+            var packages = this._dbContext.Packages.Select(p => p).ToArray();
+
             return packages;
         }
     }

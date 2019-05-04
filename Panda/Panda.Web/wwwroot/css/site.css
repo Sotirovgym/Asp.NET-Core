@@ -18,6 +18,10 @@ html {
   }
 }
 
+#row.asd{
+    padding-left: 125px;
+}
+
 .border-top {
   border-top: 1px solid #e5e5e5;
 }

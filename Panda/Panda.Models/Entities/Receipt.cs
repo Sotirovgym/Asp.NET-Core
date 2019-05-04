@@ -1,11 +1,13 @@
 ﻿namespace Panda.Models.Entities
 {
     using System;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Receipt
     {
-        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         [Required]

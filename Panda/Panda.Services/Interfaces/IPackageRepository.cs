@@ -4,7 +4,7 @@
     using System;
     using System.Collections.Generic;
 
-    public interface IPackageRepository
+    public interface IPackageService
     {
         IEnumerable<Package> GetPackages();
 

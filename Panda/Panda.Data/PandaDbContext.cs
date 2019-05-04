@@ -1,5 +1,7 @@
 ﻿namespace Panda.Data
 {
+    using System;
+    using System.ComponentModel.DataAnnotations.Schema;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Panda.Models.Entities;
@@ -22,7 +24,15 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            
+
+            builder.Entity<Package>()
+                .Property(p => p.Id)
+                .HasDefaultValueSql("NEWID()");
+
+            builder.Entity<Receipt>()
+                .Property(r => r.Id)
+                .HasDefaultValueSql("NEWID()");
+
             builder.Entity<Receipt>()
                 .HasOne(r => r.Package)
                 .WithMany(p => p.Receipts)
@@ -37,6 +47,11 @@
                 .HasMany(u => u.Packages)
                 .WithOne(p => p.Recipient)
                 .HasForeignKey(p => p.RecipientId);
+        }
+
+        private string DatabaseGenerated(object identity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -3,7 +3,9 @@
     using Panda.Models.Enums;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Package
     {
@@ -11,10 +13,11 @@
         {
             this.Receipts = new HashSet<Receipt>();
         }
-
-        [Required]
+        
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
+        [Required]
         [MaxLength(2000)]
         public string Description { get; set; }
 
@@ -27,9 +30,8 @@
 
         [Required]
         public Status Status { get; set; }
-
-        [Required]
-        public DateTime EstimatedDeliveryDate { get; set; }
+        
+        public DateTime? EstimatedDeliveryDate { get; set; }
 
         public string RecipientId { get; set; }
         [Required]

@@ -10,8 +10,8 @@ using Panda.Data;
 namespace Panda.Data.Migrations
 {
     [DbContext(typeof(PandaDbContext))]
-    [Migration("20190414151837_initial")]
-    partial class initial
+    [Migration("20190503122417_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -87,11 +87,9 @@ namespace Panda.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -122,11 +120,9 @@ namespace Panda.Data.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -191,12 +187,14 @@ namespace Panda.Data.Migrations
             modelBuilder.Entity("Panda.Models.Entities.Package", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("NEWID()");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(2000);
 
-                    b.Property<DateTime>("EstimatedDeliveryDate");
+                    b.Property<DateTime?>("EstimatedDeliveryDate");
 
                     b.Property<string>("RecipientId")
                         .IsRequired();
@@ -219,7 +217,8 @@ namespace Panda.Data.Migrations
             modelBuilder.Entity("Panda.Models.Entities.Receipt", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("NEWID()");
 
                     b.Property<decimal>("Fee");
 

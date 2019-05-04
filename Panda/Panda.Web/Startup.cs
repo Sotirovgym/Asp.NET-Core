@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Panda.Models.Entities;
 using Panda.Data;
+using Panda.Services;
+using Panda.Services.Interfaces;
 
 namespace Panda.Web
 {
@@ -56,6 +58,8 @@ namespace Panda.Web
                 });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

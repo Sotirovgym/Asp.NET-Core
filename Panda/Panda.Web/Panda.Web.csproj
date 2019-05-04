@@ -17,6 +17,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Panda.Data\Panda.Data.csproj" />
     <ProjectReference Include="..\Panda.Models\Panda.Models.csproj" />
+    <ProjectReference Include="..\Panda.Services\Panda.Services.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Models\BindingModels\" />
   </ItemGroup>
 
 </Project>

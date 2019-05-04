@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Panda.Data.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -94,8 +94,8 @@ namespace Panda.Data.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -139,8 +139,8 @@ namespace Panda.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -158,12 +158,12 @@ namespace Panda.Data.Migrations
                 name: "Packages",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    Description = table.Column<string>(maxLength: 2000, nullable: true),
+                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "NEWID()"),
+                    Description = table.Column<string>(maxLength: 2000, nullable: false),
                     Weight = table.Column<decimal>(nullable: false),
                     ShippingAddreess = table.Column<string>(maxLength: 150, nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    EstimatedDeliveryDate = table.Column<DateTime>(nullable: false),
+                    EstimatedDeliveryDate = table.Column<DateTime>(nullable: true),
                     RecipientId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -181,7 +181,7 @@ namespace Panda.Data.Migrations
                 name: "Receipts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false, defaultValueSql: "NEWID()"),
                     Fee = table.Column<decimal>(nullable: false),
                     IssuedOn = table.Column<DateTime>(nullable: false),
                     RecipientId = table.Column<string>(nullable: false),
