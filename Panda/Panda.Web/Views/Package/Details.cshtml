@@ -1,0 +1,26 @@
+﻿@model Package
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="col-12">
+    <h2 class="text-center mr-5">Package Details</h2>
+    <hr style="border: solid 1px" />
+
+    <div class="row p-2" style="margin-left: 125px">
+        <div class="col-4">
+            <h5>Address</h5>
+            <p>@Model.ShippingAddreess</p>
+        </div>
+        <div class="col-4">
+            <h5>Status</h5>
+            <p>@Model.Status</p>
+        </div>
+        <div class="col-4">
+            <h5>Estimated Delivery Date</h5>
+            <p>@Model.EstimatedDeliveryDate</p>
+        </div>
+    </div>
+    <hr style="border: solid 1px" />
+</div>
+

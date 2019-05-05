@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Panda.Data;
-using Panda.Models.Entities;
-using Panda.Models.Enums;
-using Panda.Services.Interfaces;
-using Panda.Web.Models.ViewModels;
-
-namespace Panda.Web.Controllers
+﻿namespace Panda.Web.Controllers
 {
+    using System.Diagnostics;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Panda.Models.Enums;
+    using Panda.Services.Interfaces;
+    using Panda.Web.Models.ViewModels;
+
     [AllowAnonymous]
     public class HomeController : Controller
     {
