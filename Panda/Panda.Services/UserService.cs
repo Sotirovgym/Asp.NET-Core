@@ -41,5 +41,17 @@
 
             return packagesByStatus;
         }
+
+        public MyIdentityUser GetUserById(string id)
+        {
+            var user = _dbContext.Users.FirstOrDefault(u => u.Id == id);
+
+            if (user == null)
+            {
+                throw new InvalidOperationException("There is no such user");
+            }
+
+            return user;
+        }
     }
 }

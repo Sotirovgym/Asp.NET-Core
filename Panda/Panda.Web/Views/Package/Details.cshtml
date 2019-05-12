@@ -1,13 +1,13 @@
-﻿@model Package
+﻿@model PackageDetailsViewModel
 @{
     ViewData["Title"] = "Details";
 }
 
 <div class="col-12">
-    <h2 class="text-center mr-5">Package Details</h2>
+    <h2 class="text-center">Package Details</h2>
     <hr style="border: solid 1px" />
 
-    <div class="row p-2" style="margin-left: 125px">
+    <div class="row p-2" style="margin-left: 75px">
         <div class="col-4">
             <h5>Address</h5>
             <p>@Model.ShippingAddreess</p>
@@ -17,10 +17,34 @@
             <p>@Model.Status</p>
         </div>
         <div class="col-4">
-            <h5>Estimated Delivery Date</h5>
-            <p>@Model.EstimatedDeliveryDate</p>
+            <h5 class="ml-5">Estimated Delivery Date</h5>
+            @if (Model.EstimatedDeliveryDate == null)
+            {
+                <p class="text-center">N/A</p>
+            }
+            else
+            {
+                <p class="text-center">@Model.EstimatedDeliveryDate</p>
+            }
         </div>
     </div>
     <hr style="border: solid 1px" />
+    <div class="row p-2">
+        <div class="col-6 text-center">
+            <h5>Weight</h5>
+            <p>@Model.Weight</p>
+        </div>
+        <div class="col-6 text-center">
+            <h5>Recipient</h5>
+            <p>@Model.RecipientName</p>
+        </div>
+    </div>
+    <div class="col-11">
+        <hr style="border: solid 1px; margin-left: 100px" />
+    </div>
+    <div class="text-center">
+        <h5>Description</h5>
+        <p>@Model.Description</p>
+    </div>
 </div>
 
