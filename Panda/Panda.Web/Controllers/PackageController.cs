@@ -1,11 +1,8 @@
 ﻿namespace Panda.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Panda.Models.Entities;
     using Panda.Services.Interfaces;
     using Panda.Web.Models.ViewModels;
 
@@ -20,6 +17,7 @@
             _userService = userService;
         }
 
+        [Authorize(Roles = "User, Admin")]
         public IActionResult Details(Guid id)
         {
             var package = _packageService.GetPackageById(id);

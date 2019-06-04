@@ -62,6 +62,7 @@ namespace Panda.Web
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IPackageService, PackageService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IReceiptService, ReceiptService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,18 +3,17 @@
     using System.Diagnostics;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Panda.Models.Enums;
     using Panda.Services.Interfaces;
     using Panda.Web.Models.ViewModels;
 
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        private IUserService _userService;
+        private IPackageService _packageService;
 
-        public HomeController(IUserService userService)
+        public HomeController(IPackageService packageService)
         {
-            this._userService = userService;
+            this._packageService = packageService;
         }
 
         public IActionResult Index()
@@ -22,9 +21,11 @@
 
             if (User.Identity.IsAuthenticated)
             {
-                var packages = new PackageViewModel(_userService.GetPackagesByStatus(Status.Pending),
-                                                    _userService.GetPackagesByStatus(Status.Shipped),
-                                                    _userService.GetPackagesByStatus(Status.Delivered));
+                var username = User.Identity.Name;
+
+                var packages = new PackageViewModel(_packageService.GetPendingPackagesByUser(username),
+                                                    _packageService.GetShippedPackagesByUser(username),
+                                                    _packageService.GetDeliveredAndAcquiredPackagesByUser(username));
 
                 return this.View(packages);
             }

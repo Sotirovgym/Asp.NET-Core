@@ -1,0 +1,14 @@
+﻿th {
+    border: solid 2px;
+    border-color: darkgrey;
+}
+
+tr {
+    border: solid 2px;
+    border-color: lightgray;
+}
+
+td {
+    border: solid 2px;
+    border-color: lightgray;
+}
