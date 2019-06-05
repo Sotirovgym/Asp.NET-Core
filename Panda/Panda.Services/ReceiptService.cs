@@ -16,6 +16,18 @@
             _dbContext = dbContext;
         }
 
+        public Receipt GetReceiptById(Guid id)
+        {
+            var receipt = _dbContext.Receipts.FirstOrDefault(r => r.Id == id);
+
+            if (receipt == null)
+            {
+                throw new InvalidOperationException("There is no such receipt!");
+            }
+
+            return receipt;
+        }
+
         public IEnumerable<Receipt> GetUserReceipts(string username)
         {
             var user = _dbContext.Users.FirstOrDefault(u => u.UserName == username);

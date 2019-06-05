@@ -1,0 +1,38 @@
+﻿@model ReceiptDetailsViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h4 class="text-center">Receipt Details</h4>
+<hr style="border: solid 1px" />
+
+<div class="row col-12">
+    <p><strong>Receipt Number:</strong></p>
+    <p class="ml-auto"><strong>@Model.Id</strong></p>
+</div>
+<hr style="border: solid 1px" />
+<div class="row col-12">
+    <p><strong>Issued On:</strong></p>
+    <p class="ml-auto"><strong>@Model.IssuedOn.ToString("dd/MM/yyyy")</strong></p>
+</div>
+<div class="row col-12">
+    <p><strong>Delivery Address:</strong></p>
+    <p class="ml-auto"><strong>@Model.DeliveryAddress</strong></p>
+</div>
+<hr style="border: solid 1px" />
+<div class="row col-12">
+    <p><strong>Package Weight (KG):</strong></p>
+    <p class="ml-auto"><strong>@Model.PackageWeight</strong></p>
+</div>
+<div class="row col-12">
+    <p><strong>Package Description:</strong></p>
+    <p class="ml-auto"><strong>@Model.PackageDescription</strong></p>
+</div>
+<div class="row col-12">
+    <p><strong>Recipient:</strong></p>
+    <p class="ml-auto"><strong>@Model.Recipient</strong></p>
+</div>
+<hr style="border: solid 1px" />
+<div class="row col-12">
+    <p class="ml-auto"><strong>Total: $@Model.TotalPrice</strong></p>
+</div>
