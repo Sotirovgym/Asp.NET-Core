@@ -16,6 +16,12 @@
             _dbContext = dbContext;
         }
 
+        public void AddReceipt(Receipt receipt)
+        {
+            _dbContext.Receipts.Add(receipt);
+            _dbContext.SaveChanges();
+        }
+
         public Receipt GetReceiptById(Guid id)
         {
             var receipt = _dbContext.Receipts.FirstOrDefault(r => r.Id == id);

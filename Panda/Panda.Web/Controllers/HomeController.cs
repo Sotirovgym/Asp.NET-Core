@@ -3,6 +3,7 @@
     using System.Diagnostics;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Panda.Models.Enums;
     using Panda.Services.Interfaces;
     using Panda.Web.Models.ViewModels;
 
@@ -23,10 +24,10 @@
             {
                 var username = User.Identity.Name;
 
-                var packages = new PackageViewModel(_packageService.GetPendingPackagesByUser(username),
-                                                    _packageService.GetShippedPackagesByUser(username),
-                                                    _packageService.GetDeliveredAndAcquiredPackagesByUser(username));
-
+                var packages = new PackageViewModel(_packageService.GetUserPackagesByStatus(username, Status.Pending),
+                                                    _packageService.GetUserPackagesByStatus(username, Status.Shipped),
+                                                    _packageService.GetUserPackagesByStatus(username, Status.Delivered));
+                
                 return this.View(packages);
             }
 

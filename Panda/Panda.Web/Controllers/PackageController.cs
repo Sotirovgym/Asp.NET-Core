@@ -3,6 +3,7 @@
     using System;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Panda.Models.Entities;
     using Panda.Services.Interfaces;
     using Panda.Web.Models.ViewModels;
 
@@ -10,11 +11,15 @@
     {
         private IPackageService _packageService;
         private IUserService _userService;
+        private IReceiptService _receiptService;
 
-        public PackageController(IPackageService packageService, IUserService userService)
+        public PackageController(IPackageService packageService, 
+                                 IUserService userService,
+                                 IReceiptService receiptService)
         {
             _packageService = packageService;
             _userService = userService;
+            _receiptService = receiptService;
         }
 
         [Authorize(Roles = "User, Admin")]
@@ -35,6 +40,40 @@
             };
 
             return View(packageDetailsViewModel);
+        }
+
+        [Authorize(Roles = "User, Admin")]
+        public IActionResult AcquirePackage(Guid Id)
+        {
+            var package = _packageService.GetPackageById(Id);
+
+            var receipt = new Receipt
+            {
+                Fee = package.Weight * 2.67m,
+                IssuedOn = DateTime.Now,
+                PackageId = package.Id,
+                RecipientId = package.RecipientId
+            };
+
+            _receiptService.AddReceipt(receipt);
+            _packageService.SetStatusToAcquired(package.Id);
+
+            return this.RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult ShippedPackages()
+        {
+            return this.View();
+        }
+
+        public IActionResult PendingPackages()
+        {
+            return this.View();
+        }
+
+        public IActionResult DeliveredPackages()
+        {
+            return this.View();
         }
     }
 }

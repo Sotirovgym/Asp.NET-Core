@@ -7,18 +7,18 @@
 
     public interface IPackageService
     {
-        IEnumerable<Package> GetPackages();
-
         Package GetPackageById(Guid id);
 
-        void CreatePackage(Package package);
+        void AddPackage(Package package);
 
-        IEnumerable<Package> GetUserPackages(string username);
+        void SetStatusToAcquired(Guid id);
 
-        IEnumerable<Package> GetShippedPackagesByUser(string username);
+        IEnumerable<Package> GetUserPackagesByStatus(string username, Status status);
 
-        IEnumerable<Package> GetPendingPackagesByUser(string username);
+        IEnumerable<Package> GetShippedPackages();
 
-        IEnumerable<Package> GetDeliveredAndAcquiredPackagesByUser(string username);
+        IEnumerable<Package> GetPendingPackages();
+
+        IEnumerable<Package> GetDeliveredAndAcquiredPackages();
     }
 }

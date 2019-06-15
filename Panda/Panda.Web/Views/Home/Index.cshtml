@@ -5,7 +5,14 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <h1 class="display-4 text-center">Hello, @User.Identity.Name!</h1>
+    @if (User.IsInRole("Admin"))
+    {
+        <h2 class="text-center">Hello, Administrator @User.Identity.Name!</h2>
+    }
+    else
+    {
+        <h2 class="text-center">Hello, @User.Identity.Name!</h2>
+    }
     <hr style="background-color:black; height: 1px;" class="col-lg-12" />
 
     <div class="card-group col-lg-12">
@@ -17,10 +24,10 @@
                     <div class="card-body">
                         @foreach (var pack in Model.PendingPackages)
                         {
-                        <div class="form-row">
-                            <p class="card-text">@pack.Description</p>
-                            <a class="btn btn-dark ml-auto" style="height: 37px" asp-action="Details" asp-controller="Package" asp-route-id="@pack.Id">Details</a>
-                        </div>
+                            <div class="form-row">
+                                <p class="card-text">@pack.Description</p>
+                                <a class="btn btn-dark ml-auto" style="height: 37px" asp-action="Details" asp-controller="Package" asp-route-id="@pack.Id">Details</a>
+                            </div>
                         }
                     </div>
                 </div>
@@ -34,8 +41,10 @@
                     <div class="card-body">
                         @foreach (var pack in Model.ShippedPackages)
                         {
-                            <p class="card-text">@pack.Description</p>
-                            <a class="btn btn-dark ml-auto" style="height: 37px" asp-action="Details" asp-controller="Package" asp-route-id="@pack.Id">Details</a>
+                            <div class="form-row">
+                                <p class="card-text">@pack.Description</p>
+                                <a class="btn btn-dark ml-auto" style="height: 37px" asp-action="Details" asp-controller="Package" asp-route-id="@pack.Id">Details</a>
+                            </div>
                         }
                     </div>
                 </div>
@@ -49,8 +58,10 @@
                     <div class="card-body">
                         @foreach (var pack in Model.DeliveredPackages)
                         {
-                            <p class="card-text">@pack.Description</p>
-                            <a class="btn btn-dark ml-auto" style="height: 37px" asp-action="Details" asp-controller="Package" asp-route-id="@pack.Id">Details</a>
+                            <div class="form-row">
+                                <p class="card-text">@pack.Description</p>
+                                <a class="btn btn-dark ml-auto" style="height: 37px" asp-action="AcquirePackage" asp-controller="Package" asp-route-id="@pack.Id">Acquire</a>
+                            </div>
                         }
                     </div>
                 </div>

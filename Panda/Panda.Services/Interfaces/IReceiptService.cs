@@ -6,6 +6,8 @@
 
     public interface IReceiptService
     {
+        void AddReceipt(Receipt receipt);
+
         IEnumerable<Receipt> GetUserReceipts(string username);
 
         Receipt GetReceiptById(Guid id);

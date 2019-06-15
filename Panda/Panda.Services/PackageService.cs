@@ -17,7 +17,7 @@
             this._dbContext = dbContext;
         }
 
-        public void CreatePackage(Package package)
+        public void AddPackage(Package package)
         {
             this._dbContext.Packages.Add(package);
             this._dbContext.SaveChanges();
@@ -35,14 +35,28 @@
             return package;
         }
 
-        public IEnumerable<Package> GetPackages()
+        public IEnumerable<Package> GetShippedPackages()
         {
-            var packages = this._dbContext.Packages.Select(p => p).ToArray();
+            var packages = _dbContext.Packages.Where(p => p.Status == Status.Shipped);
 
             return packages;
         }
 
-        public IEnumerable<Package> GetPendingPackagesByUser(string username)
+        public IEnumerable<Package> GetPendingPackages()
+        {
+            var packages = _dbContext.Packages.Where(p => p.Status == Status.Pending);
+
+            return packages;
+        }
+
+        public IEnumerable<Package> GetDeliveredAndAcquiredPackages()
+        {
+            var packages = _dbContext.Packages.Where(p => p.Status == Status.Delivered || p.Status == Status.Acquired);
+
+            return packages;
+        }
+
+        public IEnumerable<Package> GetUserPackagesByStatus(string username, Status status)
         {
             var user = _dbContext.Users.FirstOrDefault(u => u.UserName == username);
 
@@ -52,58 +66,17 @@
             }
 
             var packages = _dbContext.Packages
-                .Where(p => p.RecipientId == user.Id && p.Status == Status.Pending)
+                .Where(p => p.RecipientId == user.Id && p.Status == status)
                 .ToArray();
 
             return packages;
         }
 
-        public IEnumerable<Package> GetShippedPackagesByUser(string username)
+        public void SetStatusToAcquired(Guid id)
         {
-            var user = _dbContext.Users.FirstOrDefault(u => u.UserName == username);
-
-            if (user == null)
-            {
-                throw new InvalidOperationException("There is no such user!");
-            }
-
-            var packages = _dbContext.Packages
-                .Where(p => p.RecipientId == user.Id && p.Status == Status.Shipped)
-                .ToArray();
-
-            return packages;
-        }
-
-        public IEnumerable<Package> GetDeliveredAndAcquiredPackagesByUser(string username)
-        {
-            var user = _dbContext.Users.FirstOrDefault(u => u.UserName == username);
-
-            if (user == null)
-            {
-                throw new InvalidOperationException("There is no such user!");
-            }
-
-            var packages = _dbContext.Packages
-                .Where(p => p.RecipientId == user.Id && p.Status == Status.Delivered || p.Status == Status.Acquired)
-                .ToArray();
-
-            return packages;
-        }
-
-        public IEnumerable<Package> GetUserPackages(string username)
-        {
-            var user = _dbContext.Users.FirstOrDefault(u => u.UserName == username);
-
-            if (user == null)
-            {
-                throw new InvalidOperationException("There is no such user!");
-            }
-
-            var userPackages = _dbContext.Packages
-                .Where(p => p.RecipientId == user.Id)
-                .ToArray();
-
-            return userPackages;
+            var package = _dbContext.Packages.FirstOrDefault(p => p.Id == id);
+            package.Status = Status.Acquired;
+            _dbContext.SaveChanges();
         }
     }
 }
