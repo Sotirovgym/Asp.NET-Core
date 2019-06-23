@@ -61,6 +61,7 @@
             return this.RedirectToAction("Index", "Home");
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult ShippedPackages()
         {
             var packages = _packageService.GetShippedPackages();
@@ -68,6 +69,7 @@
             return this.View(packages);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult PendingPackages()
         {
             var packages = _packageService.GetPendingPackages();
@@ -75,6 +77,7 @@
             return this.View(packages);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult DeliveredPackages()
         {
             var packages = _packageService.GetDeliveredAndAcquiredPackages();
