@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.EntityFrameworkCore;
     using Panda.Data;
     using Panda.Models.Entities;
     using Panda.Models.Enums;
@@ -37,21 +38,28 @@
 
         public IEnumerable<Package> GetShippedPackages()
         {
-            var packages = _dbContext.Packages.Where(p => p.Status == Status.Shipped);
+            var packages = _dbContext.Packages
+                .Where(p => p.Status == Status.Shipped)
+                .Include(p => p.Recipient)
+                .ToArray();
 
             return packages;
         }
 
         public IEnumerable<Package> GetPendingPackages()
         {
-            var packages = _dbContext.Packages.Where(p => p.Status == Status.Pending);
+            var packages = _dbContext.Packages.Where(p => p.Status == Status.Pending)
+                                              .Include(p => p.Recipient)
+                                              .ToArray();
 
             return packages;
         }
 
         public IEnumerable<Package> GetDeliveredAndAcquiredPackages()
         {
-            var packages = _dbContext.Packages.Where(p => p.Status == Status.Delivered || p.Status == Status.Acquired);
+            var packages = _dbContext.Packages.Where(p => p.Status == Status.Delivered || p.Status == Status.Acquired)
+                                              .Include(p => p.Recipient)
+                                              .ToArray();
 
             return packages;
         }

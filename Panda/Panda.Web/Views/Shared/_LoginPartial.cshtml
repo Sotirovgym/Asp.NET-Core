@@ -22,13 +22,13 @@
     {
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link btn btn-link text-white">Pending</a>
+                <a class="nav-link btn btn-link text-white" asp-controller="Package" asp-action="PendingPackages">Pending</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link btn btn-link text-white">Shipped</a>
+                <a class="nav-link btn btn-link text-white" asp-controller="Package" asp-action="ShippedPackages">Shipped</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link btn btn-link text-white">Delivered</a>
+                <a class="nav-link btn btn-link text-white" asp-controller="Package" asp-action="DeliveredPackages">Delivered</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link btn btn-link text-white">Package</a>

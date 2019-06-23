@@ -1,0 +1,40 @@
+﻿@model ICollection<Package>
+
+@{
+    ViewData["Title"] = "_PackagesPartial";
+    var counter = 1;
+}
+
+<link href="~/css/table.css" rel="stylesheet" />
+
+<h2 class="text-center">@Model.First().Status.ToString()</h2>
+<hr style="border: solid 1px" />
+
+<table class="table-hover col-md-12">
+    <thead>
+        <tr class="text-center">
+            <th class="p-2" scope="col">#</th>
+            <th scope="col">Description</th>
+            <th scope="col">Weight</th>
+            <th scope="col">Shipping Address</th>
+            <th scope="col">Recipient</th>
+            <th scope="col">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var package in Model)
+        {
+            <tr class="text-center">
+                <td class="p-3">@counter</td>
+                <td>@package.Description</td>
+                <td>@package.Weight</td>
+                <td>@package.ShippingAddreess</td>
+                <td>@package.Recipient.UserName</td>
+                <td><a class="btn btn-dark" asp-controller="Package" asp-action="Details" asp-route-id="@package.Id">Details</a></td>
+            </tr>
+
+            counter += 1;
+        }
+    </tbody>
+</table>
+

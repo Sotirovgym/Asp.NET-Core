@@ -63,17 +63,23 @@
 
         public IActionResult ShippedPackages()
         {
-            return this.View();
+            var packages = _packageService.GetShippedPackages();
+
+            return this.View(packages);
         }
 
         public IActionResult PendingPackages()
         {
-            return this.View();
+            var packages = _packageService.GetPendingPackages();
+
+            return this.View(packages);
         }
 
         public IActionResult DeliveredPackages()
         {
-            return this.View();
+            var packages = _packageService.GetDeliveredAndAcquiredPackages();
+
+            return this.View(packages);
         }
     }
 }
