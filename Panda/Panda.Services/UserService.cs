@@ -1,6 +1,7 @@
 ﻿namespace Panda.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Panda.Data;
     using Panda.Models.Entities;
@@ -25,6 +26,13 @@
             }
 
             return user;
+        }
+
+        public IEnumerable<MyIdentityUser> GetUsers()
+        {
+            var users = _dbContext.Users.ToArray();
+
+            return users;
         }
     }
 }

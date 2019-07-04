@@ -1,4 +1,4 @@
-﻿namespace Panda.Web.Models.ViewModels
+﻿namespace Panda.Models.ViewModels
 {
     using System;
 

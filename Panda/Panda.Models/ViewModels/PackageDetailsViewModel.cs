@@ -1,5 +1,4 @@
-﻿
-namespace Panda.Web.Models.ViewModels
+﻿namespace Panda.Models.ViewModels
 {
     using Panda.Models.Enums;
     using System;

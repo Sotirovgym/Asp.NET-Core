@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Panda.Services.Interfaces;
-    using Panda.Web.Models.ViewModels;
+    using Panda.Models.ViewModels;
     using System;
 
     [Authorize(Roles = "User, Admin")]

@@ -1,11 +1,14 @@
 ﻿namespace Panda.Web.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Panda.Models.Entities;
     using Panda.Services.Interfaces;
-    using Panda.Web.Models.ViewModels;
+    using Panda.Models.ViewModels;
 
     public class PackageController : Controller
     {
@@ -13,13 +16,47 @@
         private IUserService _userService;
         private IReceiptService _receiptService;
 
-        public PackageController(IPackageService packageService, 
+        public PackageController(IPackageService packageService,
                                  IUserService userService,
                                  IReceiptService receiptService)
         {
             _packageService = packageService;
             _userService = userService;
             _receiptService = receiptService;
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "User, Admin")]
+        public IActionResult CreatePackage()
+        {
+            var users = _userService.GetUsers();
+
+            var createPackageViewModel = new CreatePackageViewModel
+            {
+                Users = users
+            };
+
+            return this.View(createPackageViewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "User, Admin")]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreatePackage(CreatePackageViewModel packageViewModel)
+        {
+            var userId = Request.Form["UserId"];
+
+            var package = new Package
+            {
+                Description = packageViewModel.Description,
+                Weight = packageViewModel.Weight,
+                ShippingAddreess = packageViewModel.ShippingAddress,
+                RecipientId = userId
+            };
+
+            _packageService.AddPackage(package);
+
+            return RedirectToAction("PendingPackages", "Package");
         }
 
         [Authorize(Roles = "User, Admin")]

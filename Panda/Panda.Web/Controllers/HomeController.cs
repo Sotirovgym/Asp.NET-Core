@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Panda.Models.Enums;
     using Panda.Services.Interfaces;
-    using Panda.Web.Models.ViewModels;
+    using Panda.Models.ViewModels;
 
     [AllowAnonymous]
     public class HomeController : Controller

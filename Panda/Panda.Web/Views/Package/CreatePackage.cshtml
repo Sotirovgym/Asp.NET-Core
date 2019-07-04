@@ -1,0 +1,40 @@
+﻿@model CreatePackageViewModel
+
+@{
+    ViewData["Title"] = "CreatePackage";
+    var users = Model.Users.Select(u => new SelectListItem() { Value = u.Id, Text = u.UserName }).ToList();
+}
+
+<div class="col-md-10 ml-5">
+    <h2 class="text-center">Create Package</h2>
+    <hr style="border: solid 1px" />
+
+    <form method="post">
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label asp-for="Description"><strong>Description</strong></label>
+                <input class="form-control" asp-for="Description" placeholder="Description..." />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label asp-for="Weight"><strong>Weight</strong></label>
+                <input class="form-control" asp-for="Weight" placeholder="Weight..." />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label asp-for="ShippingAddress"><strong>Shipping Address</strong></label>
+                <input class="form-control" asp-for="ShippingAddress" placeholder="Shipping Address..." />
+            </div>
+
+            <div>
+                <select class="form-control" asp-for="UserId" asp-items="users"></select>
+            </div>
+
+        </div>
+
+        <div>
+            <button type="submit" value="Create package" class="btn btn-primary">Create package</button>
+        </div>
+    </form>
+</div>
+
