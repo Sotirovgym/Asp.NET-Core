@@ -3,12 +3,8 @@
 @{
     ViewData["Title"] = "CreatePackage";
     var users = new List<SelectListItem>();
-    users.Add(new SelectListItem("--Choose Recipient--", "0", false, true));
-
-    if (Model.Users != null)
-    {
-        users.AddRange(Model.Users.Select(u => new SelectListItem() { Value = u.Id, Text = u.UserName }));
-    }
+    users.Add(new SelectListItem("--Choose Recipient--", null, true, false));
+    users.AddRange(Model.Users.Select(u => new SelectListItem() { Value = u.Id, Text = u.UserName }));
 }
 
 <div class="col-md-10 ml-5">
@@ -41,8 +37,8 @@
             <hr style="border: solid 1px" />
         </div>
 
-        <span class="text-danger" asp-validation-for="UserId"></span>
         <div class="form-group col-md-6 offset-md-3">
+            <span class="text-danger" asp-validation-for="UserId"></span>
             <select class="form-control" asp-for="UserId" asp-items="users"></select>
         </div>
 
