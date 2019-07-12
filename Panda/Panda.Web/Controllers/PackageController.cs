@@ -30,7 +30,6 @@
         public IActionResult CreatePackage()
         {
             var users = _userService.GetUsers();
-
             var createPackageViewModel = new CreatePackageViewModel
             {
                 Users = users
@@ -44,8 +43,18 @@
         [ValidateAntiForgeryToken]
         public IActionResult CreatePackage(CreatePackageViewModel packageViewModel)
         {
-            var userId = Request.Form["UserId"];
+            if (!ModelState.IsValid)
+            {
+                var users = _userService.GetUsers();
+                var createPackageViewModel = new CreatePackageViewModel
+                {
+                    Users = users
+                };
 
+                return this.View(createPackageViewModel);
+            }
+
+            var userId = Request.Form["UserId"];
             var package = new Package
             {
                 Description = packageViewModel.Description,
@@ -55,7 +64,6 @@
             };
 
             _packageService.AddPackage(package);
-
             return RedirectToAction("PendingPackages", "Package");
         }
 

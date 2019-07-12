@@ -2,7 +2,13 @@
 
 @{
     ViewData["Title"] = "CreatePackage";
-    var users = Model.Users.Select(u => new SelectListItem() { Value = u.Id, Text = u.UserName }).ToList();
+    var users = new List<SelectListItem>();
+    users.Add(new SelectListItem("--Choose Recipient--", "0", false, true));
+
+    if (Model.Users != null)
+    {
+        users.AddRange(Model.Users.Select(u => new SelectListItem() { Value = u.Id, Text = u.UserName }));
+    }
 }
 
 <div class="col-md-10 ml-5">
@@ -13,27 +19,37 @@
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label asp-for="Description"><strong>Description</strong></label>
+                <span class="text-danger" asp-validation-for="Description"></span>
                 <input class="form-control" asp-for="Description" placeholder="Description..." />
             </div>
 
             <div class="form-group col-md-6">
                 <label asp-for="Weight"><strong>Weight</strong></label>
+                <span class="text-danger" asp-validation-for="Weight"></span>
                 <input class="form-control" asp-for="Weight" placeholder="Weight..." />
             </div>
 
             <div class="form-group col-md-6">
                 <label asp-for="ShippingAddress"><strong>Shipping Address</strong></label>
+                <span class="text-danger" asp-validation-for="ShippingAddress"></span>
                 <input class="form-control" asp-for="ShippingAddress" placeholder="Shipping Address..." />
             </div>
-
-            <div>
-                <select class="form-control" asp-for="UserId" asp-items="users"></select>
-            </div>
-
         </div>
 
-        <div>
-            <button type="submit" value="Create package" class="btn btn-primary">Create package</button>
+        <div class="text-center">
+            <label><strong>Recipient</strong></label>
+            <hr style="border: solid 1px" />
+        </div>
+
+        <span class="text-danger" asp-validation-for="UserId"></span>
+        <div class="form-group col-md-6 offset-md-3">
+            <select class="form-control" asp-for="UserId" asp-items="users"></select>
+        </div>
+
+        <hr style="border: solid 1px" />
+
+        <div class="text-center">
+            <button type="submit" value="Create" class="btn btn-dark">Create</button>
         </div>
     </form>
 </div>
