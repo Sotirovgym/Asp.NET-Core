@@ -86,5 +86,23 @@
             package.Status = Status.Acquired;
             _dbContext.SaveChanges();
         }
+
+        public void ShipPackage(Guid packageId)
+        {
+            var package = _dbContext.Packages.FirstOrDefault(p => p.Id == packageId);
+
+            if (package == null)
+            {
+                throw new InvalidOperationException("There is no such package.");
+            }
+
+            package.Status = Status.Shipped;
+            _dbContext.SaveChanges();
+        }
+
+        public void DeliverPackage(Guid packageId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

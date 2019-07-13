@@ -20,5 +20,9 @@
         IEnumerable<Package> GetPendingPackages();
 
         IEnumerable<Package> GetDeliveredAndAcquiredPackages();
+
+        void ShipPackage(Guid packageId);
+
+        void DeliverPackage(Guid packageId);
     }
 }
