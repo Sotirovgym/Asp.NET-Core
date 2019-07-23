@@ -102,7 +102,15 @@
 
         public void DeliverPackage(Guid packageId)
         {
-            throw new NotImplementedException();
+            var package = _dbContext.Packages.FirstOrDefault(p => p.Id == packageId);
+
+            if (package == null)
+            {
+                throw new InvalidOperationException("There is no such package.");
+            }
+
+            package.Status = Status.Delivered;
+            _dbContext.SaveChanges();
         }
     }
 }

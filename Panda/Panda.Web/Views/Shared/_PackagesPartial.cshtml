@@ -18,20 +18,39 @@
             <th scope="col">Weight</th>
             <th scope="col">Shipping Address</th>
             <th scope="col">Recipient</th>
-            <th scope="col">Details</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var package in Model)
         {
-            <tr class="text-center">
-                <td class="p-3">@counter</td>
-                <td>@package.Description</td>
-                <td>@package.Weight</td>
-                <td>@package.ShippingAddreess</td>
-                <td>@package.Recipient.UserName</td>
+        <tr class="text-center">
+            <td class="p-3">@counter</td>
+            <td>@package.Description</td>
+            <td>@package.Weight</td>
+            <td>@package.ShippingAddreess</td>
+            <td>@package.Recipient.UserName</td>
+
+            @if (User.IsInRole("Admin"))
+            {
+                if (package.Status == Panda.Models.Enums.Status.Pending)
+                {
+                    <td><a class="btn btn-dark" asp-controller="Package" asp-action="ShipPackage" asp-route-id="@package.Id">Ship</a></td>
+                }
+                else if (package.Status == Panda.Models.Enums.Status.Shipped)
+                {
+                    <td><a class="btn btn-dark" asp-controller="Package" asp-action="DeliverPackage" asp-route-id="@package.Id">Deliver</a></td>
+                }
+                else
+                {
+                    <td><a class="btn btn-dark" asp-controller="Package" asp-action="Details" asp-route-id="@package.Id">Details</a></td>
+                }
+            }
+            else
+            {
                 <td><a class="btn btn-dark" asp-controller="Package" asp-action="Details" asp-route-id="@package.Id">Details</a></td>
-            </tr>
+            }
+        </tr>
 
             counter += 1;
         }

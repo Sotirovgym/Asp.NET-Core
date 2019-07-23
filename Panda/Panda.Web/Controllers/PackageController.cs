@@ -129,5 +129,21 @@
 
             return this.View(packages);
         }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult ShipPackage(Guid id)
+        {
+            _packageService.ShipPackage(id);
+
+            return RedirectToAction("PendingPackages", "Package");
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeliverPackage(Guid id)
+        {
+            _packageService.DeliverPackage(id);
+
+            return RedirectToAction("ShippedPackages", "Package");
+        }
     }
 }
